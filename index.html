@@ -2,8 +2,9 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wesprzyj mnie</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg-light: #f5f7fa;
@@ -13,6 +14,9 @@
       --card-light: #fff;
       --card-dark: #1e1e1e;
       --shadow: rgba(0, 0, 0, 0.1);
+      --btn-bg: #5b3e99; /* ciemny fiolet */
+      --btn-bg-hover: #6f51c1;
+      --btn-text: #fff;
     }
 
     body {
@@ -20,16 +24,24 @@
       font-family: 'Segoe UI', Tahoma, sans-serif;
       background-color: var(--bg-light);
       color: var(--text-light);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
       transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      user-select: none;
+      min-height: 100vh;
+      position: relative;
+      padding-bottom: 40px;
     }
 
     body.dark {
       background-color: var(--bg-dark);
       color: var(--text-dark);
+    }
+
+    .header {
+      position: relative;
+      text-align: center;
+      padding: 60px 20px 40px;
+      overflow: hidden;
     }
 
     .emoji {
@@ -45,18 +57,40 @@
 
     h1 {
       font-size: 2.5em;
-      margin-bottom: 10px;
+      margin: 10px 0;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: var(--btn-bg);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--btn-text);
+      box-shadow: 0 4px 10px rgba(91, 62, 153, 0.5);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--btn-bg-hover);
     }
 
     .wallets {
+      margin: 0 auto;
       margin-top: 30px;
       width: 100%;
-      max-width: 700px;
+      max-width: 720px;
       background: var(--card-light);
       padding: 25px;
       border-radius: 16px;
       box-shadow: 0 4px 12px var(--shadow);
       transition: background 0.3s;
+      user-select: text;
     }
 
     body.dark .wallets {
@@ -67,141 +101,426 @@
       margin-bottom: 20px;
     }
 
-    .wallet h3 {
-      margin-bottom: 5px;
+    details summary {
+      cursor: pointer;
       font-weight: 600;
+      font-size: 1.1rem;
+      padding: 6px 0;
+      user-select: text;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    details[open] summary {
+      color: var(--btn-bg);
+    }
+
+    body.dark details[open] summary {
+      color: #9d7aff;
     }
 
     .address-row {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
       flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
     }
 
     .address {
-      flex: 1;
       background: #e0e0e0;
-      padding: 10px;
+      padding: 10px 12px;
       border-radius: 8px;
       font-family: monospace;
-      word-break: break-all;
-      user-select: all;
+      word-break: break-word;
+      flex-grow: 1;
+      user-select: text;
+      color: #222;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     body.dark .address {
       background: #333;
-      color: #fff;
+      color: #eee;
     }
 
     .copy-btn {
-      background: #007bff;
+      background-color: var(--btn-bg);
       border: none;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
+      color: var(--btn-text);
+      padding: 8px 14px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.2s;
+      font-weight: 600;
+      box-shadow: 0 3px 8px rgba(91, 62, 153, 0.5);
+      user-select: none;
+      transition: background-color 0.3s ease;
+      flex-shrink: 0;
     }
 
     .copy-btn:hover {
-      background: #0056b3;
+      background-color: var(--btn-bg-hover);
     }
 
-    .theme-toggle {
-      margin-top: 20px;
-      background: none;
-      border: 2px solid currentColor;
-      padding: 6px 14px;
+    /* Gwiazdy tło tylko w header */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 140%;
+      z-index: -1;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 5s infinite linear;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: translateY(0px); }
+      50% { opacity: 1; transform: translateY(10px); }
+    }
+
+    /* Animowany gif */
+    .animated-gif {
+      margin: 30px auto;
+      display: block;
+      max-width: 200px;
       border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
+      box-shadow: 0 4px 12px var(--shadow);
     }
 
-    .theme-toggle:hover {
-      background: currentColor;
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--btn-bg);
       color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: var(--text-light);
+      font-size: 0.9em;
+    }
+
+    body.dark .footer {
+      color: var(--text-dark);
+    }
+
+    /* QR Code */
+    .qr-container {
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+
+    details[open] .qr-container {
+      display: block;
+    }
+
+    .qr-code {
+      display: inline-block;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    body.dark .qr-code {
+      background: #333;
+    }
+
+    /* Blokada pobierania */
+    .download-blocker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      font-size: 1.5em;
+      display: none;
+    }
+
+    .download-blocker.show {
+      display: flex;
+    }
+
+    /* Responsywność */
+    @media (max-width: 480px) {
+      .address-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .copy-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+      
+      .emoji {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="emoji">💖</div>
-  <h1>Cześć! 😊</h1>
-  <p>Dziękuję, że chcesz mnie wesprzeć!</p>
+<body oncontextmenu="return false" onkeydown="blockKeys(event)">
+  <!-- Blokada pobierania -->
+  <div class="download-blocker" id="downloadBlocker">
+    <i class="fas fa-lock" style="font-size: 3em; margin-bottom: 20px;"></i>
+    <p>Ochrona zawartości strony</p>
+    <p style="font-size: 0.8em;">Ta strona nie pozwala na pobieranie swojej zawartości</p>
+  </div>
 
-  <button class="theme-toggle" onclick="toggleTheme()">🌓 Zmień motyw</button>
+  <div class="header">
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Zmień motyw</button>
+    <div class="emoji">💖</div>
+    <h1>Cześć! 😊</h1>
+    <p>Dziękuję, że chcesz mnie wesprzeć!</p>
+    <div class="stars" id="stars"></div>
+  </div>
 
   <div class="wallets">
     <div class="wallet">
-      <h3>Solana (SOL)</h3>
-      <div class="address-row">
-        <div class="address" id="sol">G4TD8JUjQHNXF3vj97pxYyAQAWpAb1dJDWJQC7wjFwmQ</div>
-        <button class="copy-btn" onclick="copyToClipboard('sol')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fab fa-solana" style="color: #00ffa3;"></i> Solana (SOL)</summary>
+        <div class="address-row">
+          <div class="address" id="sol">G4TD8JUjQHNXF3vj97pxYyAQAWpAb1dJDWJQC7wjFwmQ</div>
+          <button class="copy-btn" onclick="copyText('sol')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-sol"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Ethereum (ETH)</h3>
-      <div class="address-row">
-        <div class="address" id="eth">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
-        <button class="copy-btn" onclick="copyToClipboard('eth')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fab fa-ethereum" style="color: #627eea;"></i> Ethereum (ETH)</summary>
+        <div class="address-row">
+          <div class="address" id="eth">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+          <button class="copy-btn" onclick="copyText('eth')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-eth"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Monad</h3>
-      <div class="address-row">
-        <div class="address" id="monad">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
-        <button class="copy-btn" onclick="copyToClipboard('monad')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fas fa-coins" style="color: #5b3e99;"></i> Monad</summary>
+        <div class="address-row">
+          <div class="address" id="monad">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+          <button class="copy-btn" onclick="copyText('monad')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-monad"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Base</h3>
-      <div class="address-row">
-        <div class="address" id="base">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
-        <button class="copy-btn" onclick="copyToClipboard('base')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fas fa-layer-group" style="color: #0052ff;"></i> Base</summary>
+        <div class="address-row">
+          <div class="address" id="base">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+          <button class="copy-btn" onclick="copyText('base')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-base"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Sui</h3>
-      <div class="address-row">
-        <div class="address" id="sui">0x1101e3f99b65bd2eef818dda5c3ab6338f1c1026c24fcd934ede370d111b69fe</div>
-        <button class="copy-btn" onclick="copyToClipboard('sui')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fas fa-rocket" style="color: #6fbcf0;"></i> Sui</summary>
+        <div class="address-row">
+          <div class="address" id="sui">0x1101e3f99b65bd2eef818dda5c3ab6338f1c1026c24fcd934ede370d111b69fe</div>
+          <button class="copy-btn" onclick="copyText('sui')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-sui"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Polygon (MATIC)</h3>
-      <div class="address-row">
-        <div class="address" id="polygon">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
-        <button class="copy-btn" onclick="copyToClipboard('polygon')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fab fa-polygon" style="color: #8247e5;"></i> Polygon (MATIC)</summary>
+        <div class="address-row">
+          <div class="address" id="matic">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+          <button class="copy-btn" onclick="copyText('matic')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-matic"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Bitcoin (BTC)</h3>
-      <div class="address-row">
-        <div class="address" id="btc">bc1q6t390hphvdwwjv7apjahrhd4qdhqnyk9kxw8ax</div>
-        <button class="copy-btn" onclick="copyToClipboard('btc')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fab fa-bitcoin" style="color: #f7931a;"></i> Bitcoin (BTC)</summary>
+        <div class="address-row">
+          <div class="address" id="btc">bc1q6t390hphvdwwjv7apjahrhd4qdhqnyk9kxw8ax</div>
+          <button class="copy-btn" onclick="copyText('btc')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-btc"></div>
+      </details>
     </div>
+
     <div class="wallet">
-      <h3>Litecoin (LTC)</h3>
-      <div class="address-row">
-        <div class="address" id="ltc">Le9TkHGLb1U4YBBHCetoXPQdonNJwAAU4o</div>
-        <button class="copy-btn" onclick="copyToClipboard('ltc')">Kopiuj</button>
-      </div>
+      <details>
+        <summary><i class="fab fa-litecoin" style="color: #345d9d;"></i> Litecoin (LTC)</summary>
+        <div class="address-row">
+          <div class="address" id="ltc">Le9TkHGLb1U4YBBHCetoXPQdonNJwAAU4o</div>
+          <button class="copy-btn" onclick="copyText('ltc')">📋 Kopiuj</button>
+        </div>
+        <div class="qr-container" id="qr-ltc"></div>
+      </details>
     </div>
   </div>
 
+  <img src="https://i.imgur.com/ta1zDIZ.gif" alt="Animated GIF" class="animated-gif">
+
+  <div class="footer">
+    © 2025 • dc: piekne.jajeczko. All rights reserved.
+  </div>
+
+  <div class="notification" id="notification">Skopiowano!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <script>
-    function copyToClipboard(id) {
+    // Funkcja kopiująca tekst z elementu o danym id
+    function copyText(id) {
       const text = document.getElementById(id).innerText;
       navigator.clipboard.writeText(text).then(() => {
-        alert("Skopiowano!");
+        showNotification(`Skopiowano: ${text.substring(0, 10)}...`);
+      }).catch(() => {
+        showNotification("Nie udało się skopiować adresu. Spróbuj ręcznie.");
       });
     }
 
+    // Pokazanie powiadomienia
+    function showNotification(message) {
+      const notif = document.getElementById('notification');
+      notif.textContent = message;
+      notif.style.opacity = '1';
+      setTimeout(() => notif.style.opacity = '0', 2000);
+    }
+
+    // Przełączanie motywu jasny/ciemny
     function toggleTheme() {
       document.body.classList.toggle('dark');
+      // Zapamiętaj motyw w localStorage
+      if(document.body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+      // Regeneruj QR kody z nowymi kolorami
+      generateAllQRCodes();
+    }
+
+    // Generowanie QR kodów
+    function generateQR(elementId, text) {
+      const isDark = document.body.classList.contains('dark');
+      QRCode.toCanvas(document.getElementById(elementId), text, {
+        width: 150,
+        margin: 1,
+        color: {
+          dark: isDark ? '#eee' : '#000',
+          light: isDark ? '#1e1e1e' : '#fff'
+        }
+      });
+    }
+
+    function generateAllQRCodes() {
+      generateQR('qr-sol', document.getElementById('sol').innerText);
+      generateQR('qr-eth', document.getElementById('eth').innerText);
+      generateQR('qr-monad', document.getElementById('monad').innerText);
+      generateQR('qr-base', document.getElementById('base').innerText);
+      generateQR('qr-sui', document.getElementById('sui').innerText);
+      generateQR('qr-matic', document.getElementById('matic').innerText);
+      generateQR('qr-btc', document.getElementById('btc').innerText);
+      generateQR('qr-ltc', document.getElementById('ltc').innerText);
+    }
+
+    // Przy załadowaniu strony ustaw motyw zgodnie z localStorage lub systemem
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme');
+      if(savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark');
+      }
+      generateStars(60); // generuj 60 gwiazdek w tle
+      generateAllQRCodes();
+      
+      // Blokada próby pobrania strony
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+          e.preventDefault();
+          showDownloadBlocker();
+        }
+      });
+    }
+
+    // Generowanie gwiazdek w tle nagłówka
+    function generateStars(num) {
+      const starsContainer = document.getElementById('stars');
+      for(let i=0; i<num; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = Math.random() * 140 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Blokada podglądu kodu i kopiowania (minimalna ochrona)
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', blockKeys);
+
+    function blockKeys(e) {
+      // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+C
+      if(e.key === 'F12' ||
+         (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+         (e.ctrlKey && e.key.toLowerCase() === 'u') ||
+         (e.ctrlKey && e.key.toLowerCase() === 's') ||
+         (e.ctrlKey && e.key.toLowerCase() === 'c')) {
+        e.preventDefault();
+        if (e.ctrlKey && e.key.toLowerCase() === 's') {
+          showDownloadBlocker();
+        }
+      }
+    }
+
+    // Pokazanie blokady pobierania
+    function showDownloadBlocker() {
+      const blocker = document.getElementById('downloadBlocker');
+      blocker.classList.add('show');
+      setTimeout(() => blocker.classList.remove('show'), 2000);
     }
   </script>
 </body>
