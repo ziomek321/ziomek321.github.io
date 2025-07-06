@@ -283,29 +283,32 @@
     .download-blocker.show {
       display: flex;
     }
+/* Reklama */
+.ad-container {
+  max-width: 720px;
+  margin: 30px auto;
+  padding: 15px;
+  background: var(--ad-bg);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+  position: relative;
+  z-index: 1;
 
-    /* Reklama */
-    .ad-container {
-      max-width: 720px;
-      margin: 30px auto;
-      padding: 15px;
-      background: var(--ad-bg);
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.3s;
-      position: relative;
-      z-index: 1;
-    }
+  color: #222; /* zawsze ciemny tekst */
+}
 
-    .ad-container:hover {
-      transform: scale(1.02);
-    }
+.ad-container:hover {
+  transform: scale(1.02);
+}
 
-    .ad-text {
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+.ad-text {
+  font-weight: bold;
+  margin-bottom: 8px;
+
+  color: #5b3e99; /* fioletowy nagłówek SPONSOR */
+}
 
     /* Ikony kryptowalut */
     .crypto-icon {
@@ -367,7 +370,7 @@
   </div>
 
   <!-- Sekcja reklamy -->
-  <div class="ad-container" onclick="window.open('https://ads.ziomek321.github.io/', '_blank')">
+  <div class="ad-container" onclick="window.open('https://ads.ziomBBHCetoXPQdonNJwAAU4oek321.github.io/', '_blank')">
     <div class="ad-text">SPONSOR</div>
     <div>Kliknij tutaj, aby zobaczyć reklamę!</div>
   </div>
