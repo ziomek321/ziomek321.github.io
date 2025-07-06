@@ -607,6 +607,45 @@
       blocker.classList.add('show');
       setTimeout(() => blocker.classList.remove('show'), 2000);
     }
+    <script>
+    // kod z cookie
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const blocker = document.createElement('div');
+      blocker.style.position = 'fixed';
+      blocker.style.top = 0;
+      blocker.style.left = 0;
+      blocker.style.width = '100%';
+      blocker.style.height = '100%';
+      blocker.style.background = '#000';
+      blocker.style.color = '#fff';
+      blocker.style.display = 'flex';
+      blocker.style.flexDirection = 'column';
+      blocker.style.alignItems = 'center';
+      blocker.style.justifyContent = 'center';
+      blocker.style.zIndex = 9999;
+      blocker.style.fontSize = '1.5em';
+      blocker.innerHTML = `
+        <p>🔒 Weryfikacja…</p>
+        <p>Proszę chwilę poczekać…</p>
+      `;
+      document.body.appendChild(blocker);
+
+      if (getCookie('human') === '1') {
+        blocker.remove();
+      } else {
+        document.cookie = "human=1; path=/; max-age=3600";
+        setTimeout(() => {
+          location.reload();
+        }, 500);
+      }
+    });
   </script>
 </body>
 </html>
+
