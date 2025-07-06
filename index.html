@@ -282,12 +282,11 @@
 
     .download-blocker.show {
       display: flex;
-    }
-/* Reklama */
-.ad-container {
-  display: block;      /* żeby działał jak div */
-  max-width: 720px;    /* jak wcześniej */
-  margin: 30px auto;   /* wycentrowanie */
+
+    }.ad-container {
+  display: block;
+  max-width: 720px;
+  margin: 30px auto;
   padding: 15px;
   background: var(--ad-bg);
   border-radius: 12px;
@@ -296,9 +295,19 @@
   transition: transform 0.3s;
   position: relative;
   z-index: 1;
+  text-decoration: none;
+  color: #000; /* czarny tekst */
+  box-sizing: border-box;
+}
 
-  text-decoration: none; /* usuwa podkreślenie linka */
-  color: inherit;        /* dziedziczy kolor, możesz ustawić na sztywno */
+.ad-container:hover {
+  transform: scale(1.02);
+}
+
+.ad-text {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #5b3e99; /* fioletowy napis */
 }
 
     /* Ikony kryptowalut */
