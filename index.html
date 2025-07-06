@@ -2,9 +2,8 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wesprzyj mnie</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg-light: #f5f7fa;
@@ -14,9 +13,10 @@
       --card-light: #fff;
       --card-dark: #1e1e1e;
       --shadow: rgba(0, 0, 0, 0.1);
-      --btn-bg: #5b3e99; /* ciemny fiolet */
+      --btn-bg: #5b3e99;
       --btn-bg-hover: #6f51c1;
       --btn-text: #fff;
+      --ad-bg: #f0e6ff;
     }
 
     body {
@@ -35,6 +35,20 @@
     body.dark {
       background-color: var(--bg-dark);
       color: var(--text-dark);
+      background-image: radial-gradient(ellipse at top, transparent 0%, var(--bg-dark) 75%);
+    }
+
+    /* Gwiazdki tło dla całego dark mode */
+    body.dark::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+      background: transparent;
     }
 
     .header {
@@ -74,6 +88,7 @@
       box-shadow: 0 4px 10px rgba(91, 62, 153, 0.5);
       transition: background-color 0.3s ease;
       user-select: none;
+      z-index: 10;
     }
 
     .theme-toggle:hover {
@@ -91,6 +106,8 @@
       box-shadow: 0 4px 12px var(--shadow);
       transition: background 0.3s;
       user-select: text;
+      position: relative;
+      z-index: 1; /* Nad gwiazdkami */
     }
 
     body.dark .wallets {
@@ -163,40 +180,32 @@
       background-color: var(--btn-bg-hover);
     }
 
-    /* Gwiazdy tło tylko w header */
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 140%;
-      z-index: -1;
-      pointer-events: none;
-      background: transparent;
-    }
-
+    /* Gwiazdki w tle */
     .star {
-      position: absolute;
+      position: fixed;
       width: 2px;
       height: 2px;
       background: white;
       border-radius: 50%;
       opacity: 0.8;
       animation: twinkle 5s infinite linear;
+      z-index: -1;
     }
 
     @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: translateY(0px); }
-      50% { opacity: 1; transform: translateY(10px); }
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
     }
 
     /* Animowany gif */
     .animated-gif {
       margin: 30px auto;
       display: block;
-      max-width: 200px;
+      max-width: 300px;
+      width: 100%;
       border-radius: 10px;
       box-shadow: 0 4px 12px var(--shadow);
+      cursor: pointer;
     }
 
     /* Notification */
@@ -222,6 +231,8 @@
       padding: 20px;
       color: var(--text-light);
       font-size: 0.9em;
+      position: relative;
+      z-index: 1;
     }
 
     body.dark .footer {
@@ -273,7 +284,56 @@
       display: flex;
     }
 
+    /* Reklama */
+    .ad-container {
+      max-width: 720px;
+      margin: 30px auto;
+      padding: 15px;
+      background: var(--ad-bg);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ad-container:hover {
+      transform: scale(1.02);
+    }
+
+    .ad-text {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    /* Ikony kryptowalut */
+    .crypto-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
     /* Responsywność */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      
+      .emoji {
+        font-size: 2.5rem;
+      }
+      
+      .wallets {
+        padding: 15px;
+        border-radius: 12px;
+      }
+
+      .animated-gif {
+        max-width: 250px;
+      }
+    }
+
     @media (max-width: 480px) {
       .address-row {
         flex-direction: column;
@@ -285,12 +345,8 @@
         text-align: center;
       }
 
-      h1 {
-        font-size: 1.8em;
-      }
-      
-      .emoji {
-        font-size: 2.5rem;
+      .header {
+        padding: 50px 15px 30px;
       }
     }
   </style>
@@ -298,7 +354,7 @@
 <body oncontextmenu="return false" onkeydown="blockKeys(event)">
   <!-- Blokada pobierania -->
   <div class="download-blocker" id="downloadBlocker">
-    <i class="fas fa-lock" style="font-size: 3em; margin-bottom: 20px;"></i>
+    <div style="font-size: 3em; margin-bottom: 20px;">🔒</div>
     <p>Ochrona zawartości strony</p>
     <p style="font-size: 0.8em;">Ta strona nie pozwala na pobieranie swojej zawartości</p>
   </div>
@@ -308,13 +364,18 @@
     <div class="emoji">💖</div>
     <h1>Cześć! 😊</h1>
     <p>Dziękuję, że chcesz mnie wesprzeć!</p>
-    <div class="stars" id="stars"></div>
+  </div>
+
+  <!-- Sekcja reklamy -->
+  <div class="ad-container" onclick="window.open('https://ads.ziomek321.github.io/', '_blank')">
+    <div class="ad-text">SPONSOR</div>
+    <div>Kliknij tutaj, aby zobaczyć reklamę!</div>
   </div>
 
   <div class="wallets">
     <div class="wallet">
       <details>
-        <summary><i class="fab fa-solana" style="color: #00ffa3;"></i> Solana (SOL)</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/4128/large/solana.png" class="crypto-icon"> Solana (SOL)</summary>
         <div class="address-row">
           <div class="address" id="sol">G4TD8JUjQHNXF3vj97pxYyAQAWpAb1dJDWJQC7wjFwmQ</div>
           <button class="copy-btn" onclick="copyText('sol')">📋 Kopiuj</button>
@@ -325,7 +386,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fab fa-ethereum" style="color: #627eea;"></i> Ethereum (ETH)</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" class="crypto-icon"> Ethereum (ETH)</summary>
         <div class="address-row">
           <div class="address" id="eth">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
           <button class="copy-btn" onclick="copyText('eth')">📋 Kopiuj</button>
@@ -336,7 +397,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fas fa-coins" style="color: #5b3e99;"></i> Monad</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/39746/standard/gMonad_200px.png" class="crypto-icon"> Monad</summary>
         <div class="address-row">
           <div class="address" id="monad">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
           <button class="copy-btn" onclick="copyText('monad')">📋 Kopiuj</button>
@@ -347,7 +408,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fas fa-layer-group" style="color: #0052ff;"></i> Base</summary>
+        <summary><img src="https://images.creativefabrica.com/products/previews/2024/04/08/sJqtFjADK/2fVbFvs3mqYT4iPuvYJ87HIqaEZ-desktop.jpg" class="crypto-icon"> Base</summary>
         <div class="address-row">
           <div class="address" id="base">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
           <button class="copy-btn" onclick="copyText('base')">📋 Kopiuj</button>
@@ -358,7 +419,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fas fa-rocket" style="color: #6fbcf0;"></i> Sui</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg" class="crypto-icon"> Sui</summary>
         <div class="address-row">
           <div class="address" id="sui">0x1101e3f99b65bd2eef818dda5c3ab6338f1c1026c24fcd934ede370d111b69fe</div>
           <button class="copy-btn" onclick="copyText('sui')">📋 Kopiuj</button>
@@ -369,7 +430,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fab fa-polygon" style="color: #8247e5;"></i> Polygon (MATIC)</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/4713/large/polygon.png" class="crypto-icon"> Polygon (MATIC)</summary>
         <div class="address-row">
           <div class="address" id="matic">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
           <button class="copy-btn" onclick="copyText('matic')">📋 Kopiuj</button>
@@ -380,7 +441,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fab fa-bitcoin" style="color: #f7931a;"></i> Bitcoin (BTC)</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" class="crypto-icon"> Bitcoin (BTC)</summary>
         <div class="address-row">
           <div class="address" id="btc">bc1q6t390hphvdwwjv7apjahrhd4qdhqnyk9kxw8ax</div>
           <button class="copy-btn" onclick="copyText('btc')">📋 Kopiuj</button>
@@ -391,7 +452,7 @@
 
     <div class="wallet">
       <details>
-        <summary><i class="fab fa-litecoin" style="color: #345d9d;"></i> Litecoin (LTC)</summary>
+        <summary><img src="https://assets.coingecko.com/coins/images/2/large/litecoin.png" class="crypto-icon"> Litecoin (LTC)</summary>
         <div class="address-row">
           <div class="address" id="ltc">Le9TkHGLb1U4YBBHCetoXPQdonNJwAAU4o</div>
           <button class="copy-btn" onclick="copyText('ltc')">📋 Kopiuj</button>
@@ -401,7 +462,9 @@
     </div>
   </div>
 
-  <img src="https://i.imgur.com/ta1zDIZ.gif" alt="Animated GIF" class="animated-gif">
+  <a href="https://dsc.gg/dropling" target="_blank">
+    <img src="https://i.imgur.com/xrPB3uA.gif" alt="Animated GIF" class="animated-gif">
+  </a>
 
   <div class="footer">
     © 2025 • dc: piekne.jajeczko. All rights reserved.
@@ -435,8 +498,10 @@
       // Zapamiętaj motyw w localStorage
       if(document.body.classList.contains('dark')) {
         localStorage.setItem('theme', 'dark');
+        generateStars(150); // Więcej gwiazdek w trybie ciemnym
       } else {
         localStorage.setItem('theme', 'light');
+        clearStars();
       }
       // Regeneruj QR kody z nowymi kolorami
       generateAllQRCodes();
@@ -466,13 +531,37 @@
       generateQR('qr-ltc', document.getElementById('ltc').innerText);
     }
 
-    // Przy załadowaniu strony ustaw motyw zgodnie z localStorage lub systemem
+    // Generowanie gwiazdek
+    function generateStars(num) {
+      clearStars();
+      for(let i=0; i<num; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = Math.random() * 100 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+        star.style.opacity = '0';
+        document.body.appendChild(star);
+        
+        // Płynne pojawianie się gwiazdek
+        setTimeout(() => {
+          star.style.opacity = '0.8';
+        }, 100);
+      }
+    }
+
+    function clearStars() {
+      document.querySelectorAll('.star').forEach(star => star.remove());
+    }
+
+    // Przy załadowaniu strony
     window.onload = () => {
       const savedTheme = localStorage.getItem('theme');
       if(savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.body.classList.add('dark');
+        generateStars(150);
       }
-      generateStars(60); // generuj 60 gwiazdek w tle
       generateAllQRCodes();
       
       // Blokada próby pobrania strony
@@ -484,31 +573,22 @@
       });
     }
 
-    // Generowanie gwiazdek w tle nagłówka
-    function generateStars(num) {
-      const starsContainer = document.getElementById('stars');
-      for(let i=0; i<num; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.top = Math.random() * 140 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.animationDelay = (Math.random() * 5) + 's';
-        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-        starsContainer.appendChild(star);
-      }
-    }
-
-    // Blokada podglądu kodu i kopiowania (minimalna ochrona)
+    // Blokada podglądu kodu i kopiowania
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', blockKeys);
 
     function blockKeys(e) {
       // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+C
-      if(e.key === 'F12' ||
-         (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-         (e.ctrlKey && e.key.toLowerCase() === 'u') ||
-         (e.ctrlKey && e.key.toLowerCase() === 's') ||
-         (e.ctrlKey && e.key.toLowerCase() === 'c')) {
+      const forbiddenKeys = [
+        e.key === 'F12',
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i'),
+        (e.ctrlKey && e.key.toLowerCase() === 'u'),
+        (e.ctrlKey && e.key.toLowerCase() === 's'),
+        (e.ctrlKey && e.key.toLowerCase() === 'c'),
+        (e.metaKey && e.key === 'r')
+      ];
+      
+      if (forbiddenKeys.some(Boolean)) {
         e.preventDefault();
         if (e.ctrlKey && e.key.toLowerCase() === 's') {
           showDownloadBlocker();
