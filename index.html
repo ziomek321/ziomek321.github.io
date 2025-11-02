@@ -352,8 +352,30 @@
         padding: 50px 15px 30px;
       }
     }
+   .typewriter-text {
+  font-family: 'Russo One', monospace; /* wojskowa czcionka */
+  display: inline-block;
+  border-right: 2px solid var(--btn-bg); /* efekt migającego kursora */
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+  font-size: 1.2rem;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+  100% { border-color: var(--btn-bg); }
+}
+
   </style>
 </head>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
 <body oncontextmenu="return false" onkeydown="blockKeys(event)">
   <!-- Blokada pobierania -->
   <div class="download-blocker" id="downloadBlocker">
@@ -366,15 +388,10 @@
     <button class="theme-toggle" onclick="toggleTheme()">🌓 Zmień motyw</button>
     <div class="emoji">💖</div>
     <h1>Cześć! 😊</h1>
-    <p>Dziękuję, że chcesz mnie wesprzeć!</p>
+    <p class="typewriter-text">Dziękuję, że chcesz mnie wesprzeć!</p>
   </div>
 <!-- Sekcja reklamy -->
-<a href="https://ads.ziomBBHCetoXPQdonNJwAAU4oek321.github.io/" 
-   target="_blank" 
-   class="ad-container">
-  <div class="ad-text">SPONSOR</div>
-  <div>Kliknij tutaj, aby zobaczyć reklamę!</div>
-</a>
+
 
 
   <div class="wallets">
