@@ -1,762 +1,1061 @@
-<!DOCTYPE html>  <html lang="pl">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>ziomek32123 ~ @github</title>  
-    <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/736x/1c/b2/23/1cb2234817008da9137dfe40a2aec804.jpg">  
-    <link href="all.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">  
-    <style>  
-        :root {  
-            --bg-primary: #0d1117;  
-            --bg-secondary: #161b22;  
-            --bg-tertiary: #21262d;  
-            --text-primary: #f0f6fc;  
-            --text-secondary: #7d8590;  
-            --accent-green: #238636;  
-            --accent-blue: #000000;  
-            --accent-purple: #ffffff;  
-            --border-color: #30363d;  
-            --btn-bg: #5b3e99;  
-            --btn-bg-hover: #6f51c1;  
-            --btn-text: #fff;  
-        }  * {  
-        margin: 0;  
-        padding: 0;  
-        box-sizing: border-box;  
-    }  
-
-    body {  
-        font-family: 'JetBrains Mono', monospace;  
-        background: url('https://i.pinimg.com/736x/fa/93/ca/fa93ca154e1b59beedf3361d5cbfc759.jpg') no-repeat center center fixed;  
-        background-size: cover;  
-        position: relative;  
-        min-height: 100vh;  
-        display: flex;  
-        justify-content: center;  
-        align-items: center;  
-        color: var(--text-primary);  
-        overflow-x: hidden;  
-    }  
-
-    body::before {  
-        content: '';  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        background: rgba(13, 17, 23, 0.7);  
-        backdrop-filter: blur(3px);  
-        z-index: -1;  
-    }  
-
-    .container {  
-        width: 100%;  
-        max-width: 700px;  
-        margin: 20px;  
-        animation: slideIn 0.8s ease-out;  
-    }  
-
-    @keyframes slideIn {  
-        from {  
-            opacity: 0;  
-            transform: translateY(30px);  
-        }  
-        to {  
-            opacity: 1;  
-            transform: translateY(0);  
-        }  
-    }  
-
-    .terminal {  
-        background: rgba(22, 27, 34, 0.2);  
-        border-radius: 12px;  
-        border: 1px solid var(--border-color);  
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);  
-        overflow: hidden;  
-        backdrop-filter: blur(15px);  
-        -webkit-backdrop-filter: blur(15px);  
-    }  
-
-    .terminal-header {  
-        background: var(--bg-tertiary);  
-        padding: 12px 20px;  
-        display: flex;  
-        align-items: center;  
-        justify-content: space-between;  
-        border-bottom: 1px solid var(--border-color);  
-    }  
-
-    .terminal-buttons {  
-        display: flex;  
-        gap: 8px;  
-    }  
-
-    .btn {  
-        width: 12px;  
-        height: 12px;  
-        border-radius: 50%;  
-        cursor: pointer;  
-        transition: transform 0.2s ease;  
-    }  
-
-    .btn:hover {  
-        transform: scale(1.2);  
-    }  
-
-    .btn.red {  
-        background: #ff5f56;  
-    }  
-
-    .btn.yellow {  
-        background: #ffbd2e;  
-    }  
-
-    .btn.green {  
-        background: #27ca3f;  
-    }  
-
-    .terminal-title {  
-        font-size: 14px;  
-        color: var(--text-secondary);  
-        font-weight: 500;  
-    }  
-
-    .terminal-body {  
-        padding: 0;  
-    }  
-
-    .banner {  
-        height: 200px;  
-        overflow: hidden;  
-        position: relative;  
-        margin-bottom: -100px;  
-    }  
-
-    .banner img {  
-        width: 100%;  
-        height: 100%;  
-        object-fit: cover;  
-        filter: brightness(0.7) saturate(1.2);  
-    }  
-
-    .banner::after {  
-        content: '';  
-        position: absolute;  
-        bottom: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 50%;  
-        background: linear-gradient(transparent, rgba(22, 27, 34, 0.9));  
-    }  
-
-    .profile-section {  
-        display: flex;  
-        flex-direction: column;  
-        align-items: center;  
-        text-align: center;  
-        margin-bottom: 30px;  
-        padding: 0 30px 30px 30px;  
-        position: relative;  
-        z-index: 2;  
-    }  
-
-    .profile-pic {  
-        margin-bottom: 20px;  
-    }  
-
-    .avatar {  
-        width: 120px;  
-        height: 120px;  
-        border-radius: 50%;  
-        overflow: hidden;  
-        border: 4px solid rgba(255, 255, 255, 0.3);  
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 8px rgba(255, 255, 255, 0.1);  
-        animation: pulse 2s infinite;  
-        position: relative;  
-    }  
-
-    .avatar img {  
-        width: 100%;  
-        height: 100%;  
-        object-fit: cover;  
-        transition: transform 0.3s ease;  
-    }  
-
-    .avatar:hover img {  
-        transform: scale(1.1);  
-    }  
-
-    @keyframes pulse {  
-        0%, 100% {  
-            transform: scale(1);  
-        }  
-        50% {  
-            transform: scale(1.05);  
-        }  
-    }  
-
-    .username {  
-        font-size: 32px;  
-        font-weight: 700;  
-        margin-bottom: 15px;  
-        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));  
-        -webkit-background-clip: text;  
-        -webkit-text-fill-color: transparent;  
-        background-clip: text;  
-        cursor: pointer;  
-        position: relative;  
-        display: inline-block;  
-        transition: all 0.3s ease;  
-    }  
-
-    .username:hover {  
-        text-shadow: 0 0 20px rgba(31, 111, 235, 0.6);  
-        transform: scale(1.05);  
-        filter: brightness(1.3);  
-    }  
-
-    .profile-gif {  
-        margin-bottom: 20px;  
-        width: 100%;  
-        max-width: 300px;  
-    }  
-
-    .profile-gif img {  
-        width: 100%;  
-        border-radius: 10px;  
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);  
-        transition: transform 0.3s ease;  
-    }  
-
-    .profile-gif img:hover {  
-        transform: scale(1.03);  
-    }  
-
-    .action-buttons {  
-        display: flex;  
-        gap: 15px;  
-        justify-content: center;  
-        align-items: center;  
-        margin: 15px auto 0 auto;  
-    }  
-
-    .contact-btn {  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-        gap: 8px;  
-        background: linear-gradient(135deg, #ffffff, #f0f0f0);  
-        color: #000000;  
-        border: 2px solid #333333;  
-        padding: 10px 20px;  
-        border-radius: 25px;  
-        font-family: 'JetBrains Mono', monospace;  
-        font-weight: 500;  
-        font-size: 13px;  
-        cursor: pointer;  
-        transition: all 0.3s ease;  
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);  
-        width: fit-content;  
-    }  
-
-    .contact-btn:hover {  
-        transform: translateY(-2px) scale(1.05);  
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);  
-        background: linear-gradient(135deg, #000000, #333333);  
-        color: #ffffff;  
-        border-color: #ffffff;  
-    }  
-
-    .location-info {  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-        gap: 8px;  
-        margin-top: 15px;  
-        color: var(--text-secondary);  
-        font-size: 14px;  
-        font-weight: 400;  
-        transition: all 0.3s ease;  
-    }  
-
-    .location-info:hover {  
-        color: var(--text-primary);  
-        transform: scale(1.05);  
-    }  
-
-    .location-info i {  
-        color: #ffffff;  
-        font-size: 16px;  
-        animation: locationPulse 3s infinite;  
-    }  
-
-    @keyframes locationPulse {  
-        0%, 100% {  
-            transform: scale(1);  
-            opacity: 1;  
-        }  
-        50% {  
-            transform: scale(1.1);  
-            opacity: 0.8;  
-        }  
-    }  
-
-    .command-line {  
-        font-size: 14px;  
-        margin: 25px 30px 15px 30px;  
-        color: var(--text-secondary);  
-    }  
-
-    .prompt {  
-        color: var(--accent-green);  
-        font-weight: 500;  
-    }  
-
-    .command {  
-        color: var(--accent-blue);  
-        margin-left: 10px;  
-    }  
-
-    /* Sekcja wsparcia */  
-    .support-section {  
-        margin: 0 30px 30px 30px;  
-    }  
-
-    .support-header {  
-        text-align: center;  
-        margin-bottom: 20px;  
-    }  
-
-    .support-emoji {  
-        font-size: 3rem;  
-        animation: pulse 1.5s infinite;  
-    }  
-
-    .support-title {  
-        font-size: 1.8rem;  
-        margin: 10px 0;  
-    }  
-
-    .typewriter-text {  
-        display: inline-block;  
-        border-right: 2px solid var(--btn-bg);  
-        white-space: nowrap;  
-        overflow: hidden;  
-        animation: typing 3s steps(40, end), blink 0.75s step-end infinite;  
-        font-size: 1rem;  
-        color: var(--text-secondary);  
-    }  
-
-    @keyframes typing {  
-        from { width: 0; }  
-        to { width: 100%; }  
-    }  
-
-    @keyframes blink {  
-        50% { border-color: transparent; }  
-        100% { border-color: var(--btn-bg); }  
-    }  
-
-    .wallets {  
-        background: rgba(33, 38, 45, 0.2);  
-        padding: 20px;  
-        border-radius: 8px;  
-        border: 1px solid var(--border-color);  
-        backdrop-filter: blur(8px);  
-    }  
-
-    .wallet {  
-        margin-bottom: 15px;  
-    }  
-
-    details summary {  
-        cursor: pointer;  
-        font-weight: 600;  
-        font-size: 1rem;  
-        padding: 10px 0;  
-        display: flex;  
-        align-items: center;  
-        gap: 10px;  
-        color: var(--text-primary);  
-    }  
-
-    details[open] summary {  
-        color: var(--accent-purple);  
-    }  
-
-    .address-row {  
-        display: flex;  
-        flex-wrap: wrap;  
-        align-items: center;  
-        gap: 12px;  
-        margin-top: 8px;  
-    }  
-
-    .address {  
-        background: rgba(255, 255, 255, 0.1);  
-        padding: 10px 12px;  
-        border-radius: 8px;  
-        font-family: monospace;  
-        word-break: break-word;  
-        flex-grow: 1;  
-        color: var(--text-primary);  
-        border: 1px solid var(--border-color);  
-    }  
-
-    .copy-btn {  
-        background-color: var(--btn-bg);  
-        border: none;  
-        color: var(--btn-text);  
-        padding: 8px 14px;  
-        border-radius: 10px;  
-        cursor: pointer;  
-        font-weight: 600;  
-        box-shadow: 0 3px 8px rgba(91, 62, 153, 0.5);  
-        transition: background-color 0.3s ease;  
-        flex-shrink: 0;  
-        font-family: 'JetBrains Mono', monospace;  
-    }  
-
-    .copy-btn:hover {  
-        background-color: var(--btn-bg-hover);  
-    }  
-
-    .qr-container {  
-        margin-top: 15px;  
-        text-align: center;  
-        display: none;  
-    }  
-
-    details[open] .qr-container {  
-        display: block;  
-    }  
-
-    .qr-code {  
-        display: inline-block;  
-        padding: 10px;  
-        background: rgba(255, 255, 255, 0.1);  
-        border-radius: 8px;  
-        margin-bottom: 10px;  
-        border: 1px solid var(--border-color);  
-    }  
-
-    .crypto-icon {  
-        width: 24px;  
-        height: 24px;  
-        object-fit: contain;  
-        border-radius: 50%;  
-    }  
-
-    /* Notification */  
-    .notification {  
-        position: fixed;  
-        bottom: 20px;  
-        left: 50%;  
-        transform: translateX(-50%);  
-        background-color: var(--btn-bg);  
-        color: white;  
-        padding: 12px 24px;  
-        border-radius: 8px;  
-        opacity: 0;  
-        transition: opacity 0.3s;  
-        z-index: 1000;  
-        pointer-events: none;  
-        font-family: 'JetBrains Mono', monospace;  
-    }  
-
-    /* Modale */  
-    .contact-modal {  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        background: rgba(0, 0, 0, 0.8);  
-        backdrop-filter: blur(10px);  
-        z-index: 9999;  
-        display: none;  
-        justify-content: center;  
-        align-items: center;  
-        animation: modalFadeIn 0.3s ease-out;  
-    }  
-
-    .contact-modal.show {  
-        display: flex;  
-    }  
-
-    .contact-content {  
-        background: rgba(22, 27, 34, 0.9);  
-        border: 2px solid rgba(255, 255, 255, 0.3);  
-        border-radius: 15px;  
-        padding: 30px;  
-        text-align: left;  
-        max-width: 500px;  
-        width: 90%;  
-        backdrop-filter: blur(15px);  
-        position: relative;  
-        animation: modalSlideIn 0.4s ease-out;  
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);  
-    }  
-
-    .contact-close {  
-        position: absolute;  
-        top: 15px;  
-        right: 20px;  
-        background: none;  
-        border: none;  
-        color: #ffffff;  
-        font-size: 24px;  
-        cursor: pointer;  
-        transition: all 0.3s ease;  
-        width: 30px;  
-        height: 30px;  
-        border-radius: 50%;  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-    }  
-
-    .contact-close:hover {  
-        background: rgba(255, 255, 255, 0.1);  
-        transform: rotate(90deg);  
-    }  
-
-    .contact-title {  
-        color: #ffffff;  
-        font-size: 24px;  
-        font-weight: 700;  
-        margin-bottom: 20px;  
-        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));  
-        -webkit-background-clip: text;  
-        -webkit-text-fill-color: transparent;  
-        background-clip: text;  
-    }  
-
-    .contact-list {  
-        display: flex;  
-        flex-direction: column;  
-        gap: 15px;  
-    }  
-
-    .contact-item {  
-        color: var(--text-secondary);  
-        font-size: 14px;  
-        font-family: 'JetBrains Mono', monospace;  
-        line-height: 1.4;  
-        margin: 0;  
-        transition: color 0.3s ease;  
-    }  
-
-    .contact-item:hover {  
-        color: var(--text-primary);  
-    }  
-
-    .contact-item strong {  
-        color: var(--text-primary);  
-    }  
-
-    .contact-item a {  
-        color: var(--accent-purple);  
-        text-decoration: none;  
-    }  
-
-    .contact-item a:hover {  
-        text-decoration: underline;  
-    }  
-
-    .contact-qr {  
-        margin-top: 15px;  
-        text-align: center;  
-    }  
-
-    .contact-qr img {  
-        max-width: 150px;  
-        border-radius: 8px;  
-        border: 1px solid var(--border-color);  
-    }  
-
-    @keyframes modalFadeIn {  
-        from {  
-            opacity: 0;  
-        }  
-        to {  
-            opacity: 1;  
-        }  
-    }  
-
-    @keyframes modalSlideIn {  
-        from {  
-            opacity: 0;  
-            transform: translateY(-50px) scale(0.9);  
-        }  
-        to {  
-            opacity: 1;  
-            transform: translateY(0) scale(1);  
-        }  
-    }  
-
-    /* Footer */  
-    .footer {  
-        border-top: 1px solid var(--border-color);  
-        padding: 20px 30px 0 30px;  
-    }  
-
-    .status-bar {  
-        display: flex;  
-        justify-content: center;  
-        gap: 20px;  
-        flex-wrap: wrap;  
-    }  
-
-    .status-item-footer {  
-        display: flex;  
-        align-items: center;  
-        font-size: 12px;  
-        color: var(--text-secondary);  
-    }  
-
-    .status-item-footer i {  
-        margin-right: 6px;  
-    }  
-
-    .online {  
-        color: var(--accent-green);  
-        animation: blink 1.5s infinite;  
-    }  
-
-    .linux {  
-        color: #ff9900;  
-    }  
-
-    .github {  
-        color: #ffffff;  
-    }  
-
-    @keyframes blink {  
-        0%, 50% {  
-            opacity: 1;  
-        }  
-        51%, 100% {  
-            opacity: 0.5;  
-        }  
-    }  
-
-    /* Kropki w tle */  
-    .dots-background {  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        z-index: -2;  
-        pointer-events: none;  
-    }  
-
-    .dot {  
-        position: absolute;  
-        width: 2px;  
-        height: 2px;  
-        background-color: rgba(255, 255, 255, 0.3);  
-        border-radius: 50%;  
-        animation: float 15s infinite linear;  
-    }  
-
-    @keyframes float {  
-        0% {  
-            transform: translateY(0) translateX(0);  
-        }  
-        100% {  
-            transform: translateY(-100vh) translateX(20px);  
-        }  
-    }  
-
-    /* Responsive Design */  
-    @media (max-width: 768px) {  
-        .container {  
-            margin: 10px;  
-        }  
-          
-        .terminal-body {  
-            padding: 20px;  
-        }  
-          
-        .avatar {  
-            width: 100px;  
-            height: 100px;  
-            font-size: 40px;  
-        }  
-          
-        .username {  
-            font-size: 28px;  
-        }  
-          
-        .status-bar {  
-            flex-direction: column;  
-            gap: 10px;  
-        }  
-
-        .address-row {  
-            flex-direction: column;  
-            align-items: flex-start;  
-        }  
-
-        .copy-btn {  
-            width: 100%;  
-            text-align: center;  
-        }  
-    }  
-
-    @media (max-width: 480px) {  
-        .avatar {  
-            width: 80px;  
-            height: 80px;  
-            font-size: 32px;  
-        }  
-          
-        .username {  
-            font-size: 24px;  
-        }  
-          
-        .terminal-header {  
-            padding: 10px 15px;  
-        }  
-          
-        .terminal-body {  
-            padding: 15px;  
-        }  
-
-        .support-title {  
-            font-size: 1.5rem;  
-        }  
-    }  
-</style>
-
-</head>  
-<body>  
-    <!-- Kropki w tle -->  
-    <div class="dots-background" id="dotsBackground"></div>  <div class="container">  
-    <div class="terminal">  
-        <div class="terminal-header">  
-            <div class="terminal-buttons">  
-                <span class="btn red" id="restartBtn"></span>  
-                <span class="btn yellow" id="refreshBtn"></span>  
-                <span class="btn green" id="minimizeBtn"></span>  
-            </div>  
-            <div class="terminal-title">ziomek32123@github:~$</div>  
-        </div>  
-          
-        <div class="terminal-body">  
-            <!-- Banner -->  
-            <div class="banner">  
-                <img src="https://i.pinimg.com/736x/6e/c3/b1/6ec3b1b513c575771691eaccc8dd9d74.jpg" alt="Banner">  
-            </div>  
-              
-            <div class="profile-section">  
-                <div class="profile-pic">  
-                    <div class="avatar">  
-                        <img src="https://i.imgur.com/2J0AZrk.png" alt="Profile">  
-                    </div>  
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ziomek32123 ~ @github</title>
+    <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/736x/1c/b2/23/1cb2234817008da9137dfe40a2aec804.jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #7d8590;
+            --accent-green: #238636;
+            --accent-blue: #000000;
+            --accent-purple: #ffffff;
+            --border-color: #30363d;
+            --btn-bg: #5b3e99;
+            --btn-bg-hover: #6f51c1;
+            --btn-text: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: url('https://i.pinimg.com/736x/fa/93/ca/fa93ca154e1b59beedf3361d5cbfc759.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 17, 23, 0.7);
+            backdrop-filter: blur(3px);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .terminal {
+            background: rgba(22, 27, 34, 0.2);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .terminal-header {
+            background: var(--bg-tertiary);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.2);
+        }
+
+        .btn.red {
+            background: #ff5f56;
+        }
+
+        .btn.yellow {
+            background: #ffbd2e;
+        }
+
+        .btn.green {
+            background: #27ca3f;
+        }
+
+        .terminal-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .terminal-body {
+            padding: 0;
+        }
+
+        .banner {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: -100px;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) saturate(1.2);
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(22, 27, 34, 0.9));
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 30px 30px 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-pic {
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 8px rgba(255, 255, 255, 0.1);
+            animation: pulse 2s infinite;
+            position: relative;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .username {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .username:hover {
+            text-shadow: 0 0 20px rgba(31, 111, 235, 0.6);
+            transform: scale(1.05);
+            filter: brightness(1.3);
+        }
+
+        .profile-gif {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .profile-gif img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-gif img:hover {
+            transform: scale(1.03);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin: 15px auto 0 auto;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #000000;
+            border: 2px solid #333333;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: fit-content;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #000000, #333333);
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .location-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .location-info:hover {
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        .location-info i {
+            color: #ffffff;
+            font-size: 16px;
+            animation: locationPulse 3s infinite;
+        }
+
+        @keyframes locationPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .command-line {
+            font-size: 14px;
+            margin: 25px 30px 15px 30px;
+            color: var(--text-secondary);
+        }
+
+        .prompt {
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
+        .command {
+            color: var(--accent-blue);
+            margin-left: 10px;
+        }
+
+        .support-section {
+            margin: 0 30px 30px 30px;
+        }
+
+        .support-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .support-emoji {
+            font-size: 3rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        .support-title {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            border-right: 2px solid var(--btn-bg);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+            100% { border-color: var(--btn-bg); }
+        }
+
+        .wallets {
+            background: rgba(33, 38, 45, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+        }
+
+        .wallet {
+            margin-bottom: 15px;
+        }
+
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        details[open] summary {
+            color: var(--accent-purple);
+        }
+
+        .address-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .address {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-word;
+            flex-grow: 1;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .copy-btn {
+            background-color: var(--btn-bg);
+            border: none;
+            color: var(--btn-text);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(91, 62, 153, 0.5);
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--btn-bg-hover);
+        }
+
+        .qr-container {
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        details[open] .qr-container {
+            display: block;
+        }
+
+        .qr-code {
+            display: inline-block;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .crypto-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--btn-bg);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .contact-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        .contact-modal.show {
+            display: flex;
+        }
+
+        .contact-content {
+            background: rgba(22, 27, 34, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: left;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(15px);
+            position: relative;
+            animation: modalSlideIn 0.4s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .contact-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.4;
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: var(--text-primary);
+        }
+
+        .contact-item strong {
+            color: var(--text-primary);
+        }
+
+        .contact-item a {
+            color: var(--accent-purple);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-qr {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .contact-qr img {
+            max-width: 150px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 20px 30px 0 30px;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-item-footer {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .status-item-footer i {
+            margin-right: 6px;
+        }
+
+        .online {
+            color: var(--accent-green);
+            animation: blink 1.5s infinite;
+        }
+
+        .linux {
+            color: #ff9900;
+        }
+
+        .github {
+            color: #ffffff;
+        }
+
+        @keyframes blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            51%, 100% {
+                opacity: 0.5;
+            }
+        }
+
+        .dots-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .terminal-body {
+                padding: 20px;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+            
+            .username {
+                font-size: 28px;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .address-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+            
+            .username {
+                font-size: 24px;
+            }
+            
+            .terminal-header {
+                padding: 10px 15px;
+            }
+            
+            .terminal-body {
+                padding: 15px;
+            }
+
+            .support-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dots-background" id="dotsBackground"></div>
+    
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="btn red" id="restartBtn"></span>
+                    <span class="btn yellow" id="refreshBtn"></span>
+                    <span class="btn green" id="minimizeBtn"></span>
                 </div>
+                <div class="terminal-title">ziomek32123@github:~$</div>
+            </div>
+            
+            <div class="terminal-body">
+                <div class="banner">
+                    <img src="https://i.pinimg.com/736x/6e/c3/b1/6ec3b1b513c575771691eaccc8dd9d74.jpg" alt="Banner">
+                </div>
+                
+                <div class="profile-section">
+                    <div class="profile-pic">
+                        <div class="avatar">
+                            <img src="https://i.imgur.com/2J0AZrk.png" alt="Profile">
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <h1 class="username">ziomek32123</h1>
+                        
+                        <div class="profile-gif">
+                            <a href="https://dsc.gg/dropling" target="_blank">
+                                <img src="https://i.imgur.com/TYXdwvQ.gif" alt="Animated GIF">
+                            </a>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="contact-btn" id="contactBtn">
+                                <i class="fas fa-address-book"></i>
+                                <span>Kontakt</span>
+                            </button>
+                        </div>
+                        
+                        <div class="location-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="warsaw-time">Polska (czas w Warszawie: ładowanie...)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="support-section">
+                    <div class="support-header">
+                        <div class="support-emoji">💖</div>
+                        <h2 class="support-title">Wesprzyj mnie!</h2>
+                        <p class="typewriter-text">Dziękuję, że chcesz mnie wesprzeć!</p>
+                    </div>
+                    
+                    <div class="wallets">
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/4128/large/solana.png" class="crypto-icon"> Solana (SOL)</summary>
+                                <div class="address-row">
+                                    <div class="address" id="sol">G4TD8JUjQHNXF3vj97pxYyAQAWpAb1dJDWJQC7wjFwmQ</div>
+                                    <button class="copy-btn" onclick="copyText('sol')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-sol"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" class="crypto-icon"> Ethereum (ETH)</summary>
+                                <div class="address-row">
+                                    <div class="address" id="eth">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+                                    <button class="copy-btn" onclick="copyText('eth')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-eth"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/39746/standard/gMonad_200px.png" class="crypto-icon"> Monad</summary>
+                                <div class="address-row">
+                                    <div class="address" id="monad">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+                                    <button class="copy-btn" onclick="copyText('monad')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-monad"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://images.creativefabrica.com/products/previews/2024/04/08/sJqtFjADK/2fVbFvs3mqYT4iPuvYJ87HIqaEZ-desktop.jpg" class="crypto-icon"> Base</summary>
+                                <div class="address-row">
+                                    <div class="address" id="base">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+                                    <button class="copy-btn" onclick="copyText('base')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-base"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg" class="crypto-icon"> Sui</summary>
+                                <div class="address-row">
+                                    <div class="address" id="sui">0x1101e3f99b65bd2eef818dda5c3ab6338f1c1026c24fcd934ede370d111b69fe</div>
+                                    <button class="copy-btn" onclick="copyText('sui')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-sui"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/4713/large/polygon.png" class="crypto-icon"> Polygon (MATIC)</summary>
+                                <div class="address-row">
+                                    <div class="address" id="matic">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+                                    <button class="copy-btn" onclick="copyText('matic')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-matic"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" class="crypto-icon"> Bitcoin (BTC)</summary>
+                                <div class="address-row">
+                                    <div class="address" id="btc">bc1q6t390hphvdwwjv7apjahrhd4qdhqnyk9kxw8ax</div>
+                                    <button class="copy-btn" onclick="copyText('btc')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-btc"></div>
+                            </details>
+                        </div>
+
+                        <div class="wallet">
+                            <details>
+                                <summary><img src="https://assets.coingecko.com/coins/images/2/large/litecoin.png" class="crypto-icon"> Litecoin (LTC)</summary>
+                                <div class="address-row">
+                                    <div class="address" id="ltc">Le9TkHGLb1U4YBBHCetoXPQdonNJwAAU4o</div>
+                                    <button class="copy-btn" onclick="copyText('ltc')">📋 Kopiuj</button>
+                                </div>
+                                <div class="qr-container" id="qr-ltc"></div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="command-line">
+                    <span class="prompt">ziomek32123@github:~$</span>
+                    <span class="command">cat contact.txt</span>
+                </div>
+                
+                <div class="footer">
+                    <div class="status-bar">
+                        <span class="status-item-footer">
+                            <i class="fas fa-circle online"></i>
+                            Online
+                        </span>
+                        <span class="status-item-footer">
+                            <i class="fab fa-linux linux"></i>
+                            Using: Linux
+                        </span>
+                        <span class="status-item-footer">
+                            <i class="fab fa-github github"></i>
+                            Powered by: GitHub
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="contact-modal" id="contactModal">
+        <div class="contact-content">
+            <button class="contact-close" id="closeContactModal">&times;</button>
+            <h2 class="contact-title">Dane kontaktowe</h2>
+            <div class="contact-list">
+                <p class="contact-item"><strong>Website:</strong><br>
+                    <a href="https://fakecrime.bio/ziomek32123" target="_blank">fakecrime.bio/ziomek32123</a>
+                </p>
+                <p class="contact-item"><strong>Discord:</strong><br>
+                    • Zt3rmowany: <code>piekne.jajeczko</code><br>
+                    • Main: <code>ziomek32123</code>
+                </p>
+                <p class="contact-item"><strong>Telegram:</strong><br>
+                    <a href="https://t.me/ziomek32123" target="_blank">@ziomek32123</a>
+                </p>
+                <p class="contact-item"><strong>Session:</strong><br>
+                    ID: <code>05de3dd180d44fe6909b6ae1e980fb8074551db84eadf5618c2b884405aa4d4208</code>
+                </p>
+                <div class="contact-qr">
+                    <img src="https://i.imgur.com/2lEfHSv.png" alt="Session QR">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">Skopiowano!</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script>
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`Skopiowano: ${text.substring(0, 10)}...`);
+            }).catch(() => {
+                showNotification("Nie udało się skopiować adresu. Spróbuj ręcznie.");
+            });
+        }
+
+        function showNotification(message) {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.style.opacity = '1';
+            setTimeout(() => notif.style.opacity = '0', 2000);
+        }
+
+        function generateQR(elementId, text) {
+            QRCode.toCanvas(document.getElementById(elementId), text, {
+                width: 150,
+                margin: 1,
+                color: {
+                    dark: '#eee',
+                    light: '#1e1e1e'
+                }
+            });
+        }
+
+        function generateAllQRCodes() {
+            generateQR('qr-sol', document.getElementById('sol').innerText);
+            generateQR('qr-eth', document.getElementById('eth').innerText);
+            generateQR('qr-monad', document.getElementById('monad').innerText);
+            generateQR('qr-base', document.getElementById('base').innerText);
+            generateQR('qr-sui', document.getElementById('sui').innerText);
+            generateQR('qr-matic', document.getElementById('matic').innerText);
+            generateQR('qr-btc', document.getElementById('btc').innerText);
+            generateQR('qr-ltc', document.getElementById('ltc').innerText);
+        }
+
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('show');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('show');
+        }
+
+        function updateWarsawTime() {
+            const warsawTimeElement = document.getElementById('warsaw-time');
+            const now = new Date();
+            
+            const options = {
+                timeZone: 'Europe/Warsaw',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            
+            const warsawTime = now.toLocaleTimeString('pl-PL', options);
+            warsawTimeElement.textContent = `Polska (czas w Warszawie: ${warsawTime})`;
+        }
+
+        function generateDots() {
+            const dotsContainer = document.getElementById('dotsBackground');
+            const dotCount = 100;
+            
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const size = Math.random() * 2 + 1;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const animationDuration = Math.random() * 20 + 10;
+                
+                dot.style.left = `${left}%`;
+                dot.style.top = `${top}%`;
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+                dot.style.opacity = opacity;
+                dot.style.animationDuration = `${animationDuration}s`;
+                dot.style.animationDelay = `${Math.random() * 5}s`;
+                
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function setupTerminalButtons() {
+            document.getElementById('restartBtn').addEventListener('click', function() {
+                window.location.reload();
+            });
+            
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            document.getElementById('minimizeBtn').addEventListener('click', function() {
+                const terminal = document.querySelector('.terminal');
+                if (terminal.style.display === 'none') {
+                    terminal.style.display = 'block';
+                } else {
+                    terminal.style.display = 'none';
+                }
+            });
+        }
+
+        window.onload = () => {
+            generateAllQRCodes();
+            generateDots();
+            
+            document.getElementById('contactBtn').addEventListener('click', openContactModal);
+            document.getElementById('closeContactModal').addEventListener('click', closeContactModal);
+            
+            document.getElementById('contactModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('contactModal')) {
+                    closeContactModal();
+                }
+            });
+            
+            updateWarsawTime();
+            setInterval(updateWarsawTime, 1000);
+            
+            setupTerminalButtons();
+        }
+    </script>
+</body>
+</html>
