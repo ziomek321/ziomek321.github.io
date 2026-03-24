@@ -7,15 +7,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ============================================
-   RESET & PREMIUM DESIGN SYSTEM
-============================================ */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+.bio-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 8px 20px;
+  background: rgba(0, 242, 255, 0.12);
+  border: 1px solid rgba(0, 242, 255, 0.4);
+  border-radius: 40px;
+  color: #00f2ff;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  cursor: none;
+}
 
+.bio-button:hover {
+  background: rgba(0, 242, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.3);
+}
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -30,7 +48,6 @@ body {
   line-height: 1.5;
 }
 
-/* ===== CUSTOM CURSOR ===== */
 #cursor {
   position: fixed;
   width: 8px;
@@ -65,7 +82,6 @@ body:has(button:hover) #cursor {
   box-shadow: 0 0 18px #00f2ff;
 }
 
-/* ===== BACKGROUND LAYERS (dynamic & rich) ===== */
 .bg-aura {
   position: fixed;
   inset: 0;
@@ -109,7 +125,6 @@ canvas#stars {
   pointer-events: none;
 }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -124,7 +139,6 @@ canvas#stars {
   background: #00f2ff;
 }
 
-/* ===== TYPOGRAPHY ===== */
 :root {
   --glow: 0 8px 32px rgba(0, 242, 255, 0.12);
   --glass: rgba(8, 12, 22, 0.65);
@@ -135,7 +149,6 @@ canvas#stars {
   --radius-sm: 12px;
 }
 
-/* ===== NAVIGATION ===== */
 nav {
   position: fixed;
   top: 20px;
@@ -220,7 +233,6 @@ nav {
 }
 @keyframes pulse { 0%,100%{ opacity: 0.7; } 50%{ opacity: 1; transform: scale(1.2); } }
 
-/* ===== SECTION STYLES ===== */
 section {
   position: relative;
   z-index: 2;
@@ -274,8 +286,6 @@ section {
   background-clip: text;
   color: transparent;
 }
-
-/* ===== HERO SECTION ===== */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -384,8 +394,6 @@ section {
   display: flex;
   gap: 20px;
 }
-
-/* ===== BUTTONS ===== */
 .btn {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -422,8 +430,6 @@ section {
   border-color: #00f2ff;
   transform: translateY(-4px);
 }
-
-/* ===== SHOWCASE (youtube embed) ===== */
 .showcase {
   background: radial-gradient(ellipse at 50% 0%, rgba(0, 150, 200, 0.05), transparent);
 }
@@ -475,8 +481,6 @@ section {
   justify-content: space-between;
   color: #9aaec0;
 }
-
-/* ===== NEW SECTION (replaced features) ===== */
 .advantage-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -513,8 +517,6 @@ section {
   line-height: 1.6;
   font-size: 0.95rem;
 }
-
-/* ===== TEAM CARDS (no tags) ===== */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -574,7 +576,6 @@ section {
 }
 .dev-card:hover .dev-click-hint { opacity: 1; color: #00f2ff; }
 
-/* ===== FAQ PREMIUM ===== */
 .faq-list {
   display: flex;
   flex-direction: column;
@@ -621,8 +622,6 @@ section {
   line-height: 1.75;
   font-size: 1rem;
 }
-
-/* ===== LINKS ===== */
 .links-grid {
   display: grid;
   grid-template-columns: repeat(4,1fr);
@@ -645,7 +644,6 @@ section {
 .link-icon { font-size: 2.4rem; margin-bottom: 12px; }
 .link-name { font-weight: 700; letter-spacing: 0.05em; margin: 12px 0 8px; }
 
-/* ===== DOWNLOAD ===== */
 .dl-wrap {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -694,7 +692,6 @@ section {
 .dl-row-v.cyan { color: #00f2ff; font-weight: 500; }
 .dl-row-v.green { color: #2eff9e; }
 
-/* ===== FOOTER ===== */
 footer {
   margin-top: 40px;
   padding: 32px 48px;
@@ -718,7 +715,6 @@ footer {
 }
 .f-link:hover { color: #00f2ff; }
 
-/* ===== MODAL ===== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -800,7 +796,6 @@ footer {
   border-radius: 50%;
   background: rgba(255,255,255,0.05);
 }
-/* ===== REVEAL ===== */
 .sr {
   opacity: 0;
   transform: translateY(28px);
@@ -882,7 +877,6 @@ footer {
   </div>
 </section>
 
-<!-- NEW SECTION: ADVANTAGES (replaced features) -->
 <section id="advantages">
   <div class="wrap">
     <p class="sec-tag sr">Dlaczego my?</p>
@@ -906,12 +900,39 @@ footer {
     </div>
   </div>
 </section>
+<section id="team">
+  <div class="wrap">
+    <p class="sec-tag sr">Twórcy</p>
+    <h2 class="sec-title sr">NASZ <span>TEAM</span></h2>
+    <div class="team-grid">
+      
+      <div class="dev-card owner sr" onclick="openModal('owner')">
+        <div class="dev-av">S</div>
+        <div class="dev-name">siekieraalt60hz</div>
+        <div class="dev-role">★ Owner & Lead Developer</div>
+        <div class="dev-click-hint">▶ Kliknij po kontakt</div>
+        <a href="https://www.guns.lol/SIEKIERA60HZ" class="bio-button" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">📖 Bio</a>
+      </div>
 
-<section id="team"><div class="wrap"><p class="sec-tag sr">Twórcy</p><h2 class="sec-title sr">NASZ <span>TEAM</span></h2><div class="team-grid">
-  <div class="dev-card owner sr" onclick="openModal('owner')"><div class="dev-av">S</div><div class="dev-name">siekieraalt60hz</div><div class="dev-role">★ Owner & Lead Developer</div><div class="dev-click-hint">▶ Kliknij po kontakt</div></div>
-  <div class="dev-card silver sr" onclick="openModal('silver')"><div class="dev-av">Z</div><div class="dev-name">ziomek32123</div><div class="dev-role">Developer</div><div class="dev-click-hint">▶ Kliknij po kontakt</div></div>
-  <div class="dev-card bronze sr" onclick="openModal('bronze')"><div class="dev-av">F</div><div class="dev-name">f3mboyss</div><div class="dev-role">Developer</div><div class="dev-click-hint">▶ Kliknij po kontakt</div></div>
-</div></div></section>
+      <div class="dev-card silver sr" onclick="openModal('silver')">
+        <div class="dev-av">Z</div>
+        <div class="dev-name">ziomek32123</div>
+        <div class="dev-role">Developer</div>
+        <div class="dev-click-hint">▶ Kliknij po kontakt</div>
+        <a href="https://ziomek321.github.io" class="bio-button" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">📖 Bio</a>
+      </div>
+
+      <div class="dev-card bronze sr" onclick="openModal('bronze')">
+        <div class="dev-av">F</div>
+        <div class="dev-name">f3mboyss</div>
+        <div class="dev-role">Developer</div>
+        <div class="dev-click-hint">▶ Kliknij po kontakt</div>
+        <a href="#" class="bio-button" onclick="event.stopPropagation(); alert('Strona f3mboyss = false okpa nwm moze ma ale nwm'); return false;">📖 Bio NIE MA NIE KLIKAC BO WYWALI STRONE</a>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <section id="faq"><div class="wrap"><p class="sec-tag sr">FAQ</p><h2 class="sec-title sr">PYTANIA <span>I ODPOWIEDZI</span></h2><div class="faq-list">
   <div class="faq-item sr"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Czy klient jest płatny? Czy istnieje wersja premium?</span><div class="faq-icon">+</div></div><div class="faq-a"><div class="faq-a-inner">Siekiera-DLC jest całkowicie DARMOWY! Żadnych ukrytych opłat, brak wersji premium – wszystkie funkcje dostępne bezpłatnie dla każdego gracza.</div></div></div>
@@ -924,55 +945,142 @@ footer {
 </div></div></section>
 
 <section id="links"><div class="wrap"><p class="sec-tag sr">Społeczność</p><h2 class="sec-title sr">LINKI</h2><div class="links-grid">
-  <a href="#" class="link-card sr"><div class="link-icon">💬</div><div class="link-name">Discord</div><div class="link-desc">Support & aktualizacje</div></a>
-  <a href="#" class="link-card sr"><div class="link-icon">📺</div><div class="link-name">YouTube</div><div class="link-desc">Showcase</div></a>
-  <a href="#" class="link-card sr"><div class="link-icon">📦</div><div class="link-name">GitHub</div><div class="link-desc">Kod źródłowy</div></a>
-  <a href="#" class="link-card sr"><div class="link-icon">✈️</div><div class="link-name">Telegram</div><div class="link-desc">Ogłoszenia</div></a>
+  <a href="https://discord.gg/9gavHctM67" class="link-card sr">
+  <div class="link-icon">💬</div>
+  <div class="link-name">Discord</div>
+  <div class="link-desc">Support & aktualizacje</div>
+</a>
+  <a href="#" class="link-card sr"><div class="link-icon">📺</div><div class="link-name">YouTube</div><div class="link-desc">Showcase soon</div></a>
+  <a href="#" class="link-card sr"><div class="link-icon">📦</div><div class="link-name">media</div><div class="link-desc">niechcemisie</div></a>
+  <a href="#" class="link-card sr"><div class="link-icon">✈️</div><div class="link-name">Telegram</div><div class="link-desc">Ogłoszenia soon</div></a>
 </div></div></section>
 
 <section id="download" style="background: radial-gradient(ellipse at 50% 0%, rgba(0,100,150,0.08), transparent);"><div class="wrap"><div class="dl-wrap"><div><div class="dl-label"><span class="nav-dot"></span> STABILNA KOMPILACJA</div><h2 class="dl-title sr">POBIERZ<br>SIEKIERA-DLC</h2><p class="dl-desc sr">Najnowsza wersja 1.21.4 – natychmiastowa przewaga. Darmowy, bez premium, w pełni funkcjonalny.</p><ul class="dl-reqs sr"><li>Minecraft 1.21.4 (Java Edition)</li><li>Java 21 lub nowszy (wymagane)</li><li>Fabric Loader 0.16+</li><li>ViaFabric (opcjonalnie) – graj na dowolnej wersji serwera</li></ul><div class="sr"><a href="#" class="btn btn-primary">⬇ POBIERZ .JAR (1.21.4)</a></div></div>
 <div class="sr"><div class="dl-panel"><div class="dl-panel-header">▸ BUILD INFO</div><div class="dl-panel-body"><div class="dl-row"><span class="dl-row-k">Build</span><span class="dl-row-v cyan">stable-1.21.4-r3</span></div><div class="dl-row"><span class="dl-row-k">Moduły</span><span class="dl-row-v">67+</span></div><div class="dl-row"><span class="dl-row-k">Wykrywalność</span><span class="dl-row-v green">0%</span></div><div class="dl-row"><span class="dl-row-k">Status</span><span class="dl-row-v green">ONLINE</span></div></div></div><div style="margin-top:20px;background:rgba(0,0,0,0.3);border-radius:24px;padding:20px;border:1px solid rgba(255,200,100,0.2)"><span style="color:#ffd966;">⚠ FREE & NO PREMIUM</span><p style="font-size:0.75rem; margin-top:8px;">Klient jest całkowicie darmowy – bez premium, bez ograniczeń. Wszystkie aktualizacje zawsze bezpłatne.</p></div></div></div></div></section>
-
-<footer><div class="f-brand">SIEKIERA<span>-DLC</span></div><div class="f-links"><a href="#" class="f-link">Discord</a><a href="#" class="f-link">YouTube</a><a href="#" class="f-link">GitHub</a></div><div class="f-copy">© 2025 SIEKIERA-DLC · FREE CLIENT</div></footer>
-
+<footer>
+  <div class="f-brand">SIEKIERA<span>-DLC</span></div>
+  <div class="f-copy">© 2025 SIEKIERA-DLC · FREE CLIENT</div>
+</footer>
 <script>
-  // Cursor & ring
   const cur = document.getElementById('cursor'), ring = document.getElementById('cursor-ring');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
   function ringAnim(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(ringAnim); } ringAnim();
   
-  // Stars canvas
   const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d'); let W,H,stars=[];
   function resizeCanvas(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; }
   function initStars(){ stars=[]; for(let i=0;i<Math.floor(W*H/3800);i++) stars.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*0.08,vy:-0.05-Math.random()*0.08,r:Math.random()<0.3?1.3:0.8,a:0.06+Math.random()*0.2,l:Math.random()}); }
   function drawStars(){ ctx.clearRect(0,0,W,H); stars.forEach(s=>{ s.l+=0.004; if(s.l>1){ s.x=Math.random()*W; s.y=H+8; s.l=0; } s.x+=s.vx; s.y+=s.vy; let alpha=s.a*Math.sin(s.l*Math.PI); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(0,212,255,${alpha*0.7})`; ctx.fill(); }); requestAnimationFrame(drawStars); }
   window.addEventListener('resize',()=>{ resizeCanvas(); initStars(); }); resizeCanvas(); initStars(); drawStars();
   
-  // Intersection Observer
   const obs=new IntersectionObserver(e=>e.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:0.1}); document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
   
-  // FAQ toggle
   function toggleFaq(el){ let item=el.parentElement,ans=item.querySelector('.faq-a'),open=item.classList.contains('open'); document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').style.maxHeight=0;}); if(!open){ item.classList.add('open'); ans.style.maxHeight=ans.querySelector('.faq-a-inner').scrollHeight+'px'; } }
   
-  // Modal data
-  const devData={
-    owner:{name:'siekieraalt60hz',rank:'Owner & Lead Developer',avLetter:'S',avBg:'rgba(255,209,102,0.2)',contacts:[{icon:'💬',label:'Discord',value:'siekieraalt60hz'},{icon:'✈️',label:'Telegram',value:'@siekieraalt'},{icon:'📧',label:'Email',value:'owner@siekiera-dlc.pl',link:'mailto:owner@siekiera-dlc.pl'}]},
-    silver:{name:'ziomek32123',rank:'Developer',avLetter:'Z',avBg:'rgba(184,204,216,0.2)',contacts:[{icon:'💬',label:'Discord',value:'ziomek32123'},{icon:'✈️',label:'Telegram',value:'@ziomek32123'}]},
-    bronze:{name:'f3mboyss',rank:'Developer',avLetter:'F',avBg:'rgba(212,137,90,0.2)',contacts:[{icon:'💬',label:'Discord',value:'f3mboyss'},{icon:'✈️',label:'Telegram',value:'@f3mboyss'}]}
+  const devData = [
+  {
+    role: 'owner',
+    name: 'siekieraalt60hz',
+    rank: 'Owner & Lead Developer',
+    avLetter: 'S',
+
+    avImg: 'https://i.imgur.com/txbYUI7.png',
+    avBg: 'rgba(255,209,102,0.2)',
+    contacts: [
+      {
+        icon: '💬',
+        label: 'Discord',
+        value: 'siekieraalt60hz'
+      }
+    ]
+  },
+  {
+    role: 'silver',
+    name: 'ziomek32123',
+    rank: 'Developer',
+    avLetter: 'Z',
+
+    avImg: 'https://i.imgur.com/vpqyoYz.jpeg',
+    avBg: 'rgba(184,204,216,0.2)',
+    contacts: [
+      {
+        icon: '💬',
+        label: 'Discord',
+        value: 'piekne.jajeczko'
+      },
+      {
+        icon: '✈️',
+        label: 'Telegram',
+        value: '@ziomek32123'
+      }
+    ]
+  },
+  {
+    role: 'bronze',
+    name: 'f3mboyss',
+    rank: 'Developer',
+    avLetter: 'F',
+
+    avImg: 'https://i.imgur.com/j3mwU1D.png',
+    avBg: 'rgba(212,137,90,0.2)',
+    contacts: [
+      {
+        icon: '💬',
+        label: 'Discord',
+        value: 'f3mboyss'
+      },
+      {
+        icon: '✈️',
+        label: 'Other',
+        value: 'brak (nie wiem)'
+      }
+    ]
+  }
+];
+  window.openModal = (type) => {
+    let d = devData.find(d => d.role === type);
+    const avEl = document.getElementById('m-av');
+    avEl.style.cssText = `background:${d.avBg};border:1px solid #00f2ff;display:flex;align-items:center;justify-content:center;overflow:hidden;`;
+    avEl.innerHTML = d.avImg
+      ? `<img src="${d.avImg}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+      : d.avLetter;
+    document.getElementById('m-name').textContent = d.name;
+    document.getElementById('m-rank').textContent = d.rank;
+    document.getElementById('m-body').innerHTML = d.contacts.map(c =>
+      `<div class="modal-contact-row"><div class="mc-icon">${c.icon}</div><div><div class="mc-label">${c.label}</div>${c.link ? `<a href="${c.link}" class="mc-link">${c.value}</a>` : `<div class="mc-value">${c.value}</div>`}</div></div>`
+    ).join('');
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
   };
-  window.openModal=(type)=>{let d=devData[type]; document.getElementById('m-av').style.cssText=`background:${d.avBg};border:1px solid #00f2ff; display:flex; align-items:center; justify-content:center;`; document.getElementById('m-av').textContent=d.avLetter; document.getElementById('m-name').textContent=d.name; document.getElementById('m-rank').textContent=d.rank; document.getElementById('m-body').innerHTML=d.contacts.map(c=>`<div class="modal-contact-row"><div class="mc-icon">${c.icon}</div><div><div class="mc-label">${c.label}</div>${c.link?`<a href="${c.link}" class="mc-link">${c.value}</a>`:`<div class="mc-value">${c.value}</div>`}</div></div>`).join(''); document.getElementById('modal').classList.add('open'); document.body.style.overflow='hidden'; };
-  window.closeModal=()=>{document.getElementById('modal').classList.remove('open'); document.body.style.overflow='';};
-  document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal')) closeModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
-  
-  // Nav active
+
+  window.closeModal = () => {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal')) closeModal();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
-  window.addEventListener('scroll',()=>{
-    let curId='';
-    sections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 140) curId = s.id; });
-    navLinks.forEach(l=>{ l.classList.toggle('active', l.getAttribute('href')===('#'+curId)); });
+  window.addEventListener('scroll', () => {
+    let curId = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) curId = s.id; });
+    navLinks.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === ('#' + curId)); });
+  });
+
+  document.querySelectorAll('.dev-card').forEach(card => {
+    const type = card.getAttribute('onclick').match(/'(.*?)'/)[1];
+    const dev = devData.find(d => d.role === type);
+    if (!dev) return;
+    const av = card.querySelector('.dev-av');
+    if (dev.avImg) {
+      av.innerHTML = `<img src="${dev.avImg}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    } else {
+      av.textContent = dev.avLetter;
+    }
   });
 </script>
 </body>
