@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta name="description" content="tuff biopage twojego starego">
+    <meta property="og:title" content="tuff bio page your mom">
+    <meta property="og:description" content="DOJEBANA STRONA ZIOMKA I PIEKNEGO JAJUSIA WBIJAJ SKURWIELU BO IP LOGERY NIE MA">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/736x/1c/b2/23/1cb2234817008da9137dfe40a2aec804.jpg">
+    <link rel="preload" as="image" href="trippy_bg.webp">
+    <link rel="preload" as="image" href="https://cdn.discordapp.com/avatars/1345751829383872638/61d4fdb7f0551134a53ed25e3056ce97.webp?size=1024">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="preconnect" href="https://cdn.discordapp.com">
+    <link rel="preconnect" href="https://assets.coingecko.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-primary: #f0f6fc;
+            --text-secondary: #7d8590;
+            --accent-blue: #000000;
+            --accent-purple: #ffffff;
+            --border-color: #30363d;
+            --btn-bg: #5b3e99;
+            --btn-bg-hover: #6f51c1;
+            --btn-text: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: url('trippy_bg.webp') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        body.entered {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 17, 23, 0.7);
+            z-index: -1;
+        }
+
+        .enter-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 17, 23, 0.97);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.45s ease, visibility 0.45s;
+        }
+
+        .enter-overlay.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .enter-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: var(--text-primary);
+            animation: enterGlow 1.8s ease-in-out infinite;
+            user-select: none;
+        }
+
+        @keyframes enterGlow {
+            0%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0), 0 0 40px rgba(240, 246, 252, 0);
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.85;
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.35), 0 0 45px rgba(240, 246, 252, 0.3);
+                transform: scale(1.05);
+            }
+        }
+
+        .entered .banner {
+            animation: fadeUp 0.6s ease-out both;
+        }
+
+        .entered .profile-section {
+            animation: fadeUp 0.6s 0.15s ease-out both;
+        }
+
+        .entered .support-section {
+            animation: fadeUp 0.6s 0.3s ease-out both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px;
+            perspective: 1000px;
+        }
+
+        .entered .container {
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .terminal {
+            position: relative;
+            background: rgba(22, 27, 34, 0.85);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
+            will-change: transform;
+            zoom: 0.95;
+        }
+
+        .glare {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.2), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .terminal-body {
+            padding: 0;
+        }
+
+        .banner {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: -100px;
+        }
+
+        .banner img,
+        .banner video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) saturate(1.2);
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(22, 27, 34, 0.9));
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 110px 30px 30px 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-pic {
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 8px rgba(255, 255, 255, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover img {
+            transform: scale(1.1);
+        }
+
+        .username {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #000000 20%, #ffffff 50%, #000000 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .username:hover {
+            transform: scale(1.05);
+            filter: brightness(1.3);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            color: #c9d1d9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon svg {
+            width: 17px;
+            height: 17px;
+            fill: currentColor;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px) scale(1.1);
+            color: #ffffff;
+            background: var(--accent-color, #5865f2);
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .social-icon:hover[data-brand="roblox"] { background: #e2231a; }
+        .social-icon:hover[data-brand="discord"] { background: #5865f2; }
+        .social-icon:hover[data-brand="tiktok"] { background: #000000; }
+        .social-icon:hover[data-brand="youtube"] { background: #ff0000; }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin: 15px auto 0 auto;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #000000;
+            border: 2px solid #333333;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: fit-content;
+            text-decoration: none;
+        }
+
+        .contact-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #000000, #333333);
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .contact-btn:active {
+            transform: scale(0.95);
+        }
+
+        .location-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .location-info:hover {
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        .location-info .pin {
+            display: flex;
+            animation: locationPulse 3s infinite;
+        }
+
+        .location-info .pin svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+        }
+
+        @keyframes locationPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .support-section {
+            margin: 0 30px 30px 30px;
+        }
+
+        .support-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .support-emoji {
+            font-size: 3rem;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            15% {
+                transform: scale(1.25);
+            }
+            30% {
+                transform: scale(1);
+            }
+            45% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .support-title {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .wallets {
+            background: rgba(33, 38, 45, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .wallet {
+            margin-bottom: 15px;
+        }
+
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        details[open] summary {
+            color: var(--accent-purple);
+        }
+
+        details[open] .address-row {
+            animation: fadeUp 0.3s ease-out;
+        }
+
+        .support-details summary {
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .support-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .support-details .support-title {
+            margin: 0;
+        }
+
+        .support-details summary:hover {
+            transform: scale(1.05);
+            filter: brightness(1.3);
+        }
+
+        .support-details .chevron {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .support-details .chevron svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--text-secondary);
+        }
+
+        .support-details[open] .chevron {
+            transform: rotate(180deg);
+        }
+
+        .support-details[open] .wallets {
+            animation: fadeUp 0.3s ease-out;
+        }
+
+        .address-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .address {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-word;
+            flex-grow: 1;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .copy-btn {
+            background-color: var(--btn-bg);
+            border: none;
+            color: var(--btn-text);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(91, 62, 153, 0.5);
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--btn-bg-hover);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.93);
+        }
+
+        .crypto-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .visitor-counter {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(22, 27, 34, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            backdrop-filter: blur(6px);
+        }
+
+        .visitor-counter .eye {
+            display: flex;
+        }
+
+        .visitor-counter .eye svg {
+            width: 15px;
+            height: 15px;
+            fill: var(--text-secondary);
+        }
+
+        .visitor-counter .count {
+            min-width: 1ch;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--btn-bg);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .dots-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .username {
+                font-size: 28px;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .address-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+
+            .username {
+                font-size: 24px;
+            }
+
+            .support-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="enter-overlay" id="enterOverlay">
+        <span class="enter-text">click</span>
+    </div>
+
+    <div class="dots-background" id="dotsBackground"></div>
+
+    <div class="container">
+        <div class="terminal">
+            <div class="glare"></div>
+            <div class="terminal-body">
+                <div class="banner">
+                    <video src="hands_z.webm" autoplay muted loop playsinline disablepictureinpicture></video>
+                </div>
+
+                <div class="profile-section">
+                    <div class="profile-pic">
+                        <div class="avatar">
+                            <img src="https://cdn.discordapp.com/avatars/1345751829383872638/61d4fdb7f0551134a53ed25e3056ce97.webp?size=1024" alt="Profile" width="120" height="120">
+                        </div>
+                    </div>
+
+                    <div class="profile-info">
+                        <h1 class="username">jajoczek</h1>
+
+                        <div class="social-icons">
+                            <a class="social-icon" data-brand="roblox" href="https://www.roblox.com/pl/users/11702086115/profile" target="_blank" rel="noopener" title="Roblox">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.926 23.998 0 18.892 5.075.002 24 5.108ZM15.348 10.09l-5.282-1.453-1.414 5.273 5.282 1.453z"/></svg>
+                            </a>
+                            <a class="social-icon" data-brand="discord" href="https://discord.com/users/1345751829383872638" target="_blank" rel="noopener" title="Discord">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                            </a>
+                            <a class="social-icon" data-brand="discord" href="https://discord.com/users/1551679199046017185" target="_blank" rel="noopener" title="Discord 2">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                            </a>
+                            <a class="social-icon" data-brand="tiktok" href="https://www.tiktok.com/@jajoczek" target="_blank" rel="noopener" title="TikTok">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                            </a>
+                            <a class="social-icon" data-brand="youtube" href="https://www.youtube.com/@tufflarp" target="_blank" rel="noopener" title="YouTube">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            </a>
+                        </div>
+
+                        <div class="action-buttons">
+                            <a class="contact-btn" href="https://discord.gg/3hzPGcS9Hh" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                                <span>Discord</span>
+                            </a>
+                        </div>
+
+                        <div class="location-info">
+                            <span class="pin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>
+                            <span id="warsaw-time">Polska (czas w Warszawie: ładowanie...)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="support-section">
+                    <details class="support-details">
+                        <summary class="support-header">
+                            <div class="support-emoji">💖</div>
+                            <h2 class="support-title">Poratuj pieniążkami</h2>
+                            <span class="chevron"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg></span>
+                        </summary>
+                        <div class="wallets">
+                            <div class="wallet">
+                                <details>
+                                    <summary><img src="https://assets.coingecko.com/coins/images/4128/large/solana.png" class="crypto-icon" width="24" height="24" loading="lazy" decoding="async" alt="SOL"> Solana (SOL)</summary>
+                                    <div class="address-row">
+                                        <div class="address" id="sol">G4TD8JUjQHNXF3vj97pxYyAQAWpAb1dJDWJQC7wjFwmQ</div>
+                                        <button class="copy-btn" onclick="copyText('sol')">📋 Kopiuj</button>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="wallet">
+                                <details>
+                                    <summary><img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" class="crypto-icon" width="24" height="24" loading="lazy" decoding="async" alt="ETH"> Ethereum (ETH)</summary>
+                                    <div class="address-row">
+                                        <div class="address" id="eth">0x333823E8B4E21632EA74a995b5FB6c98Daff4423</div>
+                                        <button class="copy-btn" onclick="copyText('eth')">📋 Kopiuj</button>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="wallet">
+                                <details>
+                                    <summary><img src="https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg" class="crypto-icon" width="24" height="24" loading="lazy" decoding="async" alt="SUI"> Sui</summary>
+                                    <div class="address-row">
+                                        <div class="address" id="sui">0x1101e3f99b65bd2eef818dda5c3ab6338f1c1026c24fcd934ede370d111b69fe</div>
+                                        <button class="copy-btn" onclick="copyText('sui')">📋 Kopiuj</button>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="wallet">
+                                <details>
+                                    <summary><img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" class="crypto-icon" width="24" height="24" loading="lazy" decoding="async" alt="BTC"> Bitcoin (BTC)</summary>
+                                    <div class="address-row">
+                                        <div class="address" id="btc">bc1q6t390hphvdwwjv7apjahrhd4qdhqnyk9kxw8ax</div>
+                                        <button class="copy-btn" onclick="copyText('btc')">📋 Kopiuj</button>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="wallet">
+                                <details>
+                                    <summary><img src="https://assets.coingecko.com/coins/images/2/large/litecoin.png" class="crypto-icon" width="24" height="24" loading="lazy" decoding="async" alt="LTC"> Litecoin (LTC)</summary>
+                                    <div class="address-row">
+                                        <div class="address" id="ltc">Le9TkHGLb1U4YBBHCetoXPQdonNJwAAU4o</div>
+                                        <button class="copy-btn" onclick="copyText('ltc')">📋 Kopiuj</button>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="visitor-counter" id="visitorCounter">
+        <span class="eye"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></span>
+        <span class="count" id="visitorCount">...</span>
+    </div>
+
+    <div class="notification" id="notification">Skopiowano!</div>
+
+    <script>
+        const TILT_MAX = 11;
+        const TILT_SCALE = 1.03;
+        const TILT_REVERSE = false;
+
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`Skopiowano: ${text.substring(0, 10)}...`);
+            }).catch(() => {
+                showNotification("Nie udało się skopiować adresu. Spróbuj ręcznie.");
+            });
+        }
+
+        function showNotification(message) {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.style.opacity = '1';
+            setTimeout(() => notif.style.opacity = '0', 2000);
+        }
+
+        function updateWarsawTime() {
+            const warsawTimeElement = document.getElementById('warsaw-time');
+            const now = new Date();
+
+            const options = {
+                timeZone: 'Europe/Warsaw',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+
+            const warsawTime = now.toLocaleTimeString('pl-PL', options);
+            warsawTimeElement.textContent = `Polska (czas w Warszawie: ${warsawTime})`;
+        }
+
+        function generateDots() {
+            const dotsContainer = document.getElementById('dotsBackground');
+            const dotCount = 30;
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const size = Math.random() * 2 + 1;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const animationDuration = Math.random() * 20 + 10;
+
+                dot.style.left = `${left}%`;
+                dot.style.top = `${top}%`;
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+                dot.style.opacity = opacity;
+                dot.style.animationDuration = `${animationDuration}s`;
+                dot.style.animationDelay = `${Math.random() * 5}s`;
+
+                fragment.appendChild(dot);
+            }
+
+            dotsContainer.appendChild(fragment);
+        }
+
+        function setupTilt() {
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+            const card = document.querySelector('.terminal');
+            const glare = card.querySelector('.glare');
+            const direction = TILT_REVERSE ? -1 : 1;
+            let rafId = null;
+            let lastEvent = null;
+
+            const applyTilt = () => {
+                rafId = null;
+                if (!lastEvent) return;
+                const rect = card.getBoundingClientRect();
+                const px = (lastEvent.clientX - rect.left) / rect.width;
+                const py = (lastEvent.clientY - rect.top) / rect.height;
+                const rx = (0.5 - py) * 2 * TILT_MAX * direction;
+                const ry = (0.5 - px) * 2 * TILT_MAX * direction;
+                card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale3d(${TILT_SCALE}, ${TILT_SCALE}, ${TILT_SCALE})`;
+                glare.style.setProperty('--gx', `${px * 100}%`);
+                glare.style.setProperty('--gy', `${py * 100}%`);
+            };
+
+            card.addEventListener('mouseenter', (e) => {
+                lastEvent = e;
+                card.style.transition = 'transform 0.08s ease-out';
+                glare.style.opacity = '1';
+                if (!rafId) rafId = requestAnimationFrame(applyTilt);
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                lastEvent = e;
+                if (!rafId) rafId = requestAnimationFrame(applyTilt);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+                lastEvent = null;
+                card.style.transition = 'transform 0.5s ease-out';
+                card.style.transform = 'none';
+                glare.style.opacity = '0';
+            });
+        }
+
+        const TAB_WORDS = ['Welcome', 'to', 'jajoczek_Tee', 'bio page'];
+        let wordIndex = 0;
+        let charPos = 0;
+        let deleting = false;
+
+        function animateTabTitle() {
+            const word = TAB_WORDS[wordIndex];
+            let delay;
+
+            if (!deleting) {
+                charPos++;
+                document.title = word.slice(0, charPos);
+                delay = 130;
+                if (charPos === word.length) {
+                    deleting = true;
+                    delay = 1200;
+                }
+            } else {
+                charPos--;
+                document.title = word.slice(0, charPos);
+                delay = 60;
+                if (charPos === 0) {
+                    deleting = false;
+                    wordIndex = (wordIndex + 1) % TAB_WORDS.length;
+                    delay = 500;
+                }
+            }
+
+            setTimeout(animateTabTitle, delay);
+        }
+
+        const COUNTER_URL = 'https://abacus.jasoncameron.dev/hit/185.183.33.218/site_visits';
+        const SUPABASE_URL = 'https://cegpwmbxlmwdxqeowlpi.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_etBM89EWtWmt2dPhLu5i1g_cXHWiU2z';
+
+        function detectBrowser(ua) {
+            if (/Edg\//.test(ua)) return 'Edge';
+            if (/OPR\/|Opera/.test(ua)) return 'Opera';
+            if (/Firefox\//.test(ua)) return 'Firefox';
+            if (/Chrome\//.test(ua)) return 'Chrome';
+            if (/Safari\//.test(ua)) return 'Safari';
+            return 'Inna';
+        }
+
+        function detectOs(ua) {
+            if (/Windows/.test(ua)) return 'Windows';
+            if (/Android/.test(ua)) return 'Android';
+            if (/iPhone|iPad|iOS/.test(ua)) return 'iOS';
+            if (/Mac OS X/.test(ua)) return 'macOS';
+            if (/Linux/.test(ua)) return 'Linux';
+            return 'Inny';
+        }
+
+        function fetchVisitorId() {
+            return new Promise(resolve => {
+                fetch('https://abacus.jasoncameron.dev/hit/185.183.33.218/visitor_id')
+                    .then(res => res.json())
+                    .then(d => {
+                        resolve(typeof d.value === 'number' ? String(d.value) : null);
+                    })
+                    .catch(() => resolve(null));
+            });
+        }
+
+        function sendVisit(data) {
+            fetch(`${SUPABASE_URL}/rest/v1/visits`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify(data)
+            }).catch(() => {});
+        }
+
+        function setupVisitLogger() {
+            const ua = navigator.userAgent;
+            const data = {
+                user_agent: ua,
+                browser: detectBrowser(ua),
+                os: detectOs(ua),
+                screen: `${screen.width}x${screen.height}`,
+                language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                referrer: document.referrer || null
+            };
+
+            fetch('https://ipwho.is/')
+                .then(res => res.json())
+                .then(info => {
+                    data.ip = info.ip || null;
+                    return fetchVisitorId();
+                })
+                .then(id => {
+                    data.visitor_id = id;
+                    sendVisit(data);
+                })
+                .catch(() => sendVisit(data));
+        }
+
+
+        function setupVisitorCounter() {
+            const countEl = document.getElementById('visitorCount');
+            fetch(COUNTER_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if (typeof data.value === 'number') {
+                        countEl.textContent = data.value.toLocaleString('pl-PL');
+                    } else {
+                        countEl.textContent = '?';
+                    }
+                })
+                .catch(() => {
+                    countEl.textContent = '?';
+                });
+        }
+
+        window.onload = () => {
+            animateTabTitle();
+            generateDots();
+            setupVisitorCounter();
+            setupVisitLogger();
+
+            const enterOverlay = document.getElementById('enterOverlay');
+            enterOverlay.addEventListener('click', () => {
+                enterOverlay.classList.add('hide');
+                document.body.classList.add('entered');
+            }, { once: true });
+
+            updateWarsawTime();
+            setInterval(updateWarsawTime, 1000);
+
+            setupTilt();
+            setupAvatarSounds();
+        };
+
+        const AVATAR_SOUNDS = {
+            1: 'sounds/1.mp3',
+            6: 'sounds/6.mp3',
+            7: 'sounds/7.mp3'
+        };
+
+        function setupAvatarSounds() {
+            const avatar = document.querySelector('.avatar');
+            if (!avatar) return;
+
+            let clickCount = 0;
+
+            avatar.addEventListener('click', () => {
+                clickCount++;
+
+                const soundFile = AVATAR_SOUNDS[clickCount];
+
+                if (!soundFile) return;
+
+                const sound = new Audio(soundFile);
+                sound.volume = 1;
+                sound.play().catch(() => {});
+
+                if (clickCount === 7) {
+                    clickCount = 0;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
